@@ -4,7 +4,7 @@
         <title>WordyPass</title>
         <style type="text/css">
             body {
-                background: #556270 5% 95% no-repeat fixed url(seal.png);
+              background: #556270;
             }
             h1 {
                 position: absolute;
@@ -31,12 +31,31 @@
             .wordlist {
                 display: none;
             }
+
+            #footer {
+              width: 100%;
+              height: 60px;
+              position: absolute;
+              bottom: 5%;
+              left: 0;
+            }
+
+            #footer .seal {
+              background: no-repeat url(seal.png);
+              width: 60px;
+              height: 60px;
+              margin-left: 50px;
+            }
         </style>
     </head>
     <body>
 
         <h1 id="lastPassword"></h1>
         <div id="previousPasswords">
+        </div>
+
+        <div id="footer">
+          <div class="seal"></div>
         </div>
 
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>

@@ -27,11 +27,40 @@
         return s.charAt(Math.floor(Math.random() * s.length));
     };
 
-    var populate = function(selector) {
-        return $.trim($(selector).html().replace(/\s+/, ' ')).split(' ');
+    var getWordLists = function() {
+
+      var promise = $.Deferred();
+
+      function onSuccess(data, status) {
+
+        function getWords(element, key) {
+          var text = $(element, data).text();
+          wordMap[key] = $.trim(text.replace(/\s+/g, ' ')).split(' ');
+          console.log(element + ': ' + wordMap[key].length);
+        }
+
+        getWords('nouns', 'N');
+        getWords('verbs', 'V');
+        getWords('adjectives', 'J');
+        getWords('adverbs', 'A');
+        promise.resolve();
+      }
+
+      function onFailure(xhr, status, error) {
+        console.log('Something went wrong.');
+        promise.reject();
+      }
+
+      $.ajax({
+        dataType: 'xml',
+        url: './words.xml',
+        type: 'GET'
+      }).then(onSuccess, onFailure);
+
+      return promise;
     };
 
-    var generateWords = function(pattern) {
+    function generateWords(pattern) {
         var password = '';
         $.each($.trim(pattern).split(' '), function(i, m) {
             var x = Math.floor((Math.random() * wordMap[m].length) + 1);
@@ -45,7 +74,7 @@
         });
 
         return $.trim(password);
-    };
+    }
 
     var generateChars = function(pattern) {
         var password = '';
@@ -121,24 +150,20 @@
 
     $(document).ready(function() {
         // Create each of the lists
-        $.each('N V J A'.split(' '), function(i, m) {
-            wordMap[m] = populate('#list' + m);
-            if(console.log) {
-                console.log('List ' + m + ': ' + wordMap[m].length);
-            }
+        getWordLists().then(function() {
+          // Map the keys to generate a password
+          $(document).on('keydown', function(e) {
+              if(e.which === 40 || e.which === 13 || e.which === 32) {
+                  generatePassword();
+              }
+          });
+
+          // Generate the first password
+          generatePassword();
+
+          // Calculate the number of different combinations
+          calculateCount();
         });
-
-        $(document).on('keydown', function(e) {
-            if(e.which === 40 || e.which === 13 || e.which === 32) {
-                generatePassword();
-            }
-        });
-
-        generatePassword();
-
-        // Calculate the number of different combinations
-        calculateCount();
     });
 
 })(jQuery,this,this.document);
-

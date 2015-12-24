@@ -1,0 +1,62 @@
+body {
+  background: #556270;
+}
+
+h1 {
+    position: absolute;
+    top:20%;
+    width:95%;
+    text-align: center;
+    color: #eefaf9;
+    font:bold 35px Arial;
+    text-shadow:2px 2px #080a0b;
+}
+
+#previousPasswords {
+    position: absolute;
+    top:20%;
+    width:95%;
+    margin-top: 100px;
+    text-align: center;
+    color: #c2cccb;
+    font: bold 25px Arial;
+    text-shadow: 2px 2px #080a0b;
+}
+
+#previousPasswords p {
+    margin: 20px 0;
+}
+
+.wordlist {
+    display: none;
+}
+
+#footer {
+  width: 100%;
+  height: 60px;
+  position: absolute;
+  bottom: 5%;
+  left: 0;
+}
+
+#footer div {
+  vertical-align: top;
+}
+
+#footer .seal {
+  display: inline-block;
+  background: no-repeat url(seal.png);
+  width: 60px;
+  height: 60px;
+  margin-left: 50px;
+}
+
+#footer .productname {
+  display: inline-block;
+  color: #eefaf9;
+  margin-left: 20px;
+  height: 60px;
+  line-height: 60px;
+  font:bold 20px Arial;
+  text-shadow:2px 2px #080a0b;
+}

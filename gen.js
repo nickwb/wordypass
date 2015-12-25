@@ -19,12 +19,25 @@
     safeDigits = '23456789',
     safeAlpha = 'ABCDEFGHJKMNPQRSTUVWXYZ';
 
+    function randomInt(min, maxExclusive) {
+        if(max <= min) { throw 'Max must be greater than min.'; }
+        var range = maxExclusive - min;
+
+        if(window.crypto && Uint32Array) {
+            var value = new Uint32Array(1);
+            window.crypto.getRandomValues(value);
+            return (Number(value[0]) % range) + min;
+        }
+
+        return Math.floor(Math.random() * range) + min;
+    }
+
     var randomFromArray = function(a) {
-        return a[Math.floor(Math.random() * a.length)];
+        return a[randomInt(0, a.length)];
     };
 
     var randomFromString = function(s) {
-        return s.charAt(Math.floor(Math.random() * s.length));
+        return s.charAt(randomInt(0, s.length));
     };
 
     var getWordLists = function() {

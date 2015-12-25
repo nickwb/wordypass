@@ -20,7 +20,7 @@
     safeAlpha = 'ABCDEFGHJKMNPQRSTUVWXYZ';
 
     function randomInt(min, maxExclusive) {
-        if(max <= min) { throw 'Max must be greater than min.'; }
+        if(maxExclusive <= min) { throw 'Max must be greater than min.'; }
         var range = maxExclusive - min;
 
         if(window.crypto && Uint32Array) {

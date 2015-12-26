@@ -1,4 +1,3 @@
-import Promise from 'promise';
 import _ from 'underscore';
 
 import random from './random';
@@ -25,15 +24,17 @@ class Sentence {
         return word;
     }
 
-    static getRandomWordsFromPattern(pattern) {
+    static getRandomSentenceFromPattern(pattern) {
         return _.map(pattern.split(''), group => Sentence.transform(Sentence.randomWord(group), group));
     }
 
-    static getRandomWords() {
-        return Sentence.getRandomWordsFromPattern(random.randomElement(Sentence.patterns));
+    static getRandomSentence() {
+        return Sentence.getRandomSentenceFromPattern(random.randomElement(Sentence.patterns));
     }
 
     static init(words) {
+        if(Sentence.wordMap) { return; }
+
         Sentence.wordMap = {
             N: words.nouns,
             V: words.verbs,

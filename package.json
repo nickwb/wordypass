@@ -1,0 +1,40 @@
+{
+  "name": "wordypass",
+  "version": "0.0.1",
+  "description": "Generates passwords which read like sentences",
+  "author": "Nick Young <nick@nickwb.net>",
+  "contributors": [
+    {
+      "name": "Nick Young",
+      "email": "nick@nickwb.net"
+    }
+  ],
+  "main": "src/wordypass.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nickwb/wordypass.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nickwb/wordypass/issues"
+  },
+  "scripts": {
+    "test": "mocha --compilers js:babel/register",
+    "start": "http-server -p 80 ."
+  },
+  "keywords": [
+    "password",
+    "generator"
+  ],
+  "dependencies": {
+    "babel-polyfill": "^6.3.14",
+    "promise": "^7.1.1",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.3.26",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.3.13",
+    "webpack": "^1.12.9"
+  },
+  "private": true
+}

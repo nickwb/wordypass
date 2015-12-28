@@ -2,6 +2,7 @@ import 'babel-polyfill';
 
 import wordlist from './wordlist';
 import password from './password';
+import entropy from './entropy';
 
 let $ = window.jQuery;
 
@@ -35,6 +36,6 @@ $(() => {
         bindNextPassword();
         nextPassword();
 
-        console.log(password.countCombinations());
+        console.log(entropy.calculate(password.countCombinations()));
     });
 });

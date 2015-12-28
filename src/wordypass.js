@@ -5,8 +5,17 @@ import password from './password';
 
 let $ = window.jQuery;
 
+let suggestionElm, historyElm;
+
 function nextPassword() {
-    $('#lastPassword').text(password.generateRandomPassword().join(' '));
+    let next = password.generateRandomPassword().join(' '),
+        last = suggestionElm.text();
+
+    suggestionElm.text(next);
+
+    if($.trim(last)) {
+        historyElm.prepend($('<li>').text(last));
+    }
 }
 
 function bindNextPassword() {
@@ -18,6 +27,9 @@ function bindNextPassword() {
 }
 
 $(() => {
+    suggestionElm = $('#password-suggestion');
+    historyElm = $('#password-history ul');
+
     wordlist.getWordList().then(words => {
         password.init(words);
         bindNextPassword();

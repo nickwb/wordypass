@@ -2,7 +2,7 @@ let Random = {};
 
 let crypto = window.crypto,
     Uint32Array = window.Uint32Array,
-    _isCryptoApi = crypto && crypto.getRandomValues && Uint32Array;
+    _isCryptoApi = !!(crypto && crypto.getRandomValues && Uint32Array);
 
 
 Random.randomInt = function (min, maxExclusive) {

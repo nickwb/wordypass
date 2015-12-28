@@ -7,7 +7,7 @@ function pluraliseVerb(word) {
         return word.substr(0, word.length - 1) + 'ies';
     }
 
-    return word + (word.match(/[sh]$/) ? 'es' : 's');
+    return word + (word.match(/[^g][shz]$/) ? 'es' : 's');
 }
 
 class Sentence {

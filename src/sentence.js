@@ -32,6 +32,21 @@ class Sentence {
         return Sentence.getRandomSentenceFromPattern(random.randomElement(Sentence.patterns));
     }
 
+    static countCombinations() {
+
+        let getPattern = p => _.chain(p)
+            .map(c => Sentence.wordMap[c].length)
+            .reduce((product, n) => product * n, 1)
+            .value();
+
+        let sentence = _.chain(Sentence.patterns)
+            .map(getPattern)
+            .reduce((sum, n) => sum + n, 0)
+            .value();
+
+        return sentence;
+    }
+
     static init(words) {
         if(Sentence.wordMap) { return; }
 

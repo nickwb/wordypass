@@ -34,5 +34,7 @@ $(() => {
         password.init(words);
         bindNextPassword();
         nextPassword();
+
+        console.log(password.countCombinations());
     });
 });

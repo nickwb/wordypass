@@ -3,6 +3,7 @@ import 'babel-polyfill';
 import wordlist from './wordlist';
 import password from './password';
 import entropy from './entropy';
+import random from './random';
 
 let $ = window.jQuery;
 
@@ -38,4 +39,6 @@ $(() => {
 
         console.log(entropy.calculate(password.countCombinations()));
     });
+
+    console.log('Crypto Api: ' + random.isCryptoApi());
 });

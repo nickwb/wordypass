@@ -2,6 +2,10 @@ import _ from 'underscore';
 
 import random from './random';
 
+let _wordMap = null,
+    _transformers = { V: pluraliseVerb },
+    _patterns = ['JNVN', 'NVJN', 'NAVN'];;
+
 function pluraliseVerb(word) {
     if(word.match(/[^aeiou]y$/)) {
         return word.substr(0, word.length - 1) + 'ies';
@@ -10,59 +14,52 @@ function pluraliseVerb(word) {
     return word + (word.match(/[^g][shz]$/) ? 'es' : 's');
 }
 
-class Sentence {
+function randomWord(group) {
+    return random.randomElement(_wordMap[group]);
+}
 
-    static randomWord(group) {
-        return random.randomElement(Sentence.wordMap[group]);
+function transform(word, group) {
+    if(_transformers[group]) {
+        return _transformers[group](word);
     }
 
-    static transform(word, group) {
-        if(Sentence.transformers[group]) {
-            return Sentence.transformers[group](word);
-        }
+    return word;
+}
 
-        return word;
-    }
+function getRandomSentenceFromPattern(pattern) {
+    return _.map(pattern.split(''), group => transform(randomWord(group), group));
+}
 
-    static getRandomSentenceFromPattern(pattern) {
-        return _.map(pattern.split(''), group => Sentence.transform(Sentence.randomWord(group), group));
-    }
+let Sentence = {};
 
-    static getRandomSentence() {
-        return Sentence.getRandomSentenceFromPattern(random.randomElement(Sentence.patterns));
-    }
+Sentence.getRandomSentence = function () {
+    return getRandomSentenceFromPattern(random.randomElement(_patterns));
+}
 
-    static countCombinations() {
+Sentence.countCombinations = function () {
 
-        let getPattern = p => _.chain(p)
-            .map(c => Sentence.wordMap[c].length)
-            .reduce((product, n) => product * n, 1)
-            .value();
+    let getPattern = p => _.chain(p)
+        .map(c => _wordMap[c].length)
+        .reduce((product, n) => product * n, 1)
+        .value();
 
-        let sentence = _.chain(Sentence.patterns)
-            .map(getPattern)
-            .reduce((sum, n) => sum + n, 0)
-            .value();
+    let sentence = _.chain(_patterns)
+        .map(getPattern)
+        .reduce((sum, n) => sum + n, 0)
+        .value();
 
-        return sentence;
-    }
+    return sentence;
+}
 
-    static init(words) {
-        if(Sentence.wordMap) { return; }
+Sentence.init = function init(words) {
+    if(_wordMap) { return; }
 
-        Sentence.wordMap = {
-            N: words.nouns,
-            V: words.verbs,
-            J: words.adjectives,
-            A: words.adverbs
-        };
-    }
-};
-
-Sentence.patterns = ['JNVN', 'NVJN', 'NAVN'];
-
-Sentence.transformers = {
-    V: pluraliseVerb
-};
+    _wordMap = {
+        N: words.nouns,
+        V: words.verbs,
+        J: words.adjectives,
+        A: words.adverbs
+    };
+}
 
 export default Sentence;

@@ -1,6 +1,7 @@
 import Promise from 'promise';
 
 let $ = window.jQuery;
+let _listCache = null;
 
 function getWords(doc, element) {
     var text = $(element, doc).text();
@@ -8,13 +9,13 @@ function getWords(doc, element) {
     return words;
 }
 
-let listCache = null;
+let WordList = {};
 
-function getWordList() {
+WordList.getWordList = function () {
     return new Promise((resolve, reject) => {
-        
-        if(listCache) {
-            resolve(listCache);
+
+        if(_listCache) {
+            resolve(_listCache);
             return;
         }
 
@@ -23,13 +24,13 @@ function getWordList() {
           url: './words.xml',
           type: 'GET',
           success: (data, status) => {
-              listCache = {
+              _listCache = {
                 nouns: getWords(data, 'nouns'),
                 verbs: getWords(data, 'verbs'),
                 adjectives: getWords(data, 'adjectives'),
                 adverbs: getWords(data, 'adverbs'),
               };
-              resolve(listCache);
+              resolve(_listCache);
           },
           error: (xhr, status, error) => reject({ status: status, error: error })
         });
@@ -37,6 +38,4 @@ function getWordList() {
     });
 }
 
-export default {
-    getWordList: getWordList
-};
+export default WordList;

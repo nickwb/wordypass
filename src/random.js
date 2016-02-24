@@ -7,10 +7,10 @@ let crypto = window.crypto,
 
 Random.randomInt = function (min, maxExclusive) {
     if(maxExclusive <= min) { throw 'Max must be greater than min.'; }
-    var range = maxExclusive - min;
+    let range = maxExclusive - min;
 
     if(_isCryptoApi) {
-        var value = new Uint32Array(1);
+        let value = new Uint32Array(1);
         crypto.getRandomValues(value);
         return (Number(value[0]) % range) + min;
     }
